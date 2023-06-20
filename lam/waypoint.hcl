@@ -6,7 +6,7 @@ runner {
     enabled = true
     data_source "git" {
         url  = "https://github.com/ansforge/ldap-server.git"
-        ref  = "main"
+        ref  = "var.datacenter"
 		path = "lam"
 		ignore_changes_outside_path = true
     }
