@@ -6,7 +6,7 @@ runner {
     enabled = true
     data_source "git" {
         url  = "https://github.com/ansforge/ldap-server.git"
-        ref  = "var.datacenter"
+        ref  = var.datacenter
 		path = "self-service-password"
 		ignore_changes_outside_path = true
     }
@@ -15,7 +15,7 @@ runner {
 app "forge/self-service-password" {
 
     build {
-        use "docker-pull" {
+        use "docker-ref" {
             image = var.image
             tag   = var.tag
 	        disable_entrypoint = true

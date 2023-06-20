@@ -6,19 +6,24 @@ runner {
     enabled = true
     data_source "git" {
         url  = "https://github.com/ansforge/ldap-server.git"
-        ref  = "var.datacenter"
+        ref  = "henix_docker_platform_pfcpx"
 		path = "openldap"
 		ignore_changes_outside_path = true
+    }
+    # new
+    poll {
+        enabled = false
+        interval = "24h"
     }
 }
 
 app "forge/openldap" {
 
     build {
-        use "docker-pull" {
+        use "docker-ref" {
             image = var.image
             tag   = var.tag
-	        disable_entrypoint = true
+	        # disable_entrypoint = true
         }
     }
   
@@ -35,8 +40,18 @@ app "forge/openldap" {
 
 variable "datacenter" {
     type    = string
-    default = "test"
+    default = "henix_docker_platform_pfcpx-test"
+    # 
+    env = ["NOMAD_DATACENTER"]
 }
+
+variable "nomad_namespace" {
+    type = string
+    default = "default"
+    
+    env = ["NOMAD_NAMESPACE"]
+}
+#
 
 variable "image" {
     type    = string
