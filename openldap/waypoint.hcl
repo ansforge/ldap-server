@@ -4,6 +4,7 @@ labels = { "domaine" = "forge" }
 
 runner {
     enabled = true
+    profile = "${workspace.name}"
     data_source "git" {
         url  = "https://github.com/ansforge/ldap-server.git"
         ref  = "henix_docker_platform_pfcpx"
@@ -40,7 +41,7 @@ app "forge/openldap" {
 
 variable "datacenter" {
     type    = string
-    default = "henix_docker_platform_pfcpx-test"
+    default = "henix_docker_platform_pfcpx"
     # 
     env = ["NOMAD_DATACENTER"]
 }
