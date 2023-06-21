@@ -4,9 +4,10 @@ labels = { "domaine" = "forge" }
 
 runner {
     enabled = true
+    profile = "${workspace.name}"
     data_source "git" {
         url  = "https://github.com/ansforge/ldap-server.git"
-        ref  = var.datacenter
+        ref  = "henix_docker_platform_pfcpx"
 		path = "lam"
 		ignore_changes_outside_path = true
     }
@@ -18,7 +19,7 @@ app "forge/lam" {
         use "docker-ref" {
             image = var.image
             tag   = var.tag
-	        disable_entrypoint = true
+	        # disable_entrypoint = true
         }
     }
   
@@ -35,8 +36,18 @@ app "forge/lam" {
 
 variable "datacenter" {
     type    = string
-    default = "test"
+    default = "henix_docker_platform_pfcpx"
+    # 
+    env = ["NOMAD_DATACENTER"]
 }
+
+variable "nomad_namespace" {
+    type = string
+    default = "default"
+    
+    env = ["NOMAD_NAMESPACE"]
+}
+#
 
 variable "image" {
     type    = string
