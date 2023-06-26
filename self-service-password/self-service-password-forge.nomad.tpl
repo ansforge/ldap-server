@@ -1,12 +1,12 @@
 job "self-service-password-forge" {
     datacenters = ["${datacenter}"]
-	type = "service"
+    type = "service"
 
     vault {
         policies = ["forge"]
         change_mode = "restart"
     }
-    group "self-service-password-server" {  
+    group "self-service-password-server" {
         count ="1"
         
         restart {
@@ -17,7 +17,7 @@ job "self-service-password-forge" {
         }
 
         network {
-            port "self-service-password" { to = 80 }            
+            port "self-service-password" { to = 80 }
         }
 
         task "self-service-password" {
@@ -50,7 +50,7 @@ $background_image = "";
 ?>
 EOH
             }
-			
+
             config {
                 image   = "${image}:${tag}"
                 ports   = ["self-service-password"]
@@ -60,11 +60,11 @@ EOH
                 cpu    = 300
                 memory = 512
             }
-            
+
             service {
                 name = "$\u007BNOMAD_JOB_NAME\u007D"
-                tags = [ "urlprefix-self-service-password.forge.asipsante.fr/" ]
-				port = "self-service-password"
+                tags = [ "urlprefix-${servername_self-service-password}/" ]
+                port = "self-service-password"
                 check {
                     name     = "alive"
                     type     = "http"
@@ -74,6 +74,6 @@ EOH
                     port     = "self-service-password"
                 }
             }
-        } 
+        }
     }
 }
