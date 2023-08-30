@@ -83,10 +83,10 @@ EOH
         task "log-shipper" {
             driver = "docker"
             restart {
-                    interval = "3m"
-                    attempts = 5
-                    delay    = "15s"
-                    mode     = "delay"
+                interval = "3m"
+                attempts = 5
+                delay    = "15s"
+                mode     = "delay"
             }
             meta {
                 INSTANCE = "$\u007BNOMAD_ALLOC_NAME\u007D"

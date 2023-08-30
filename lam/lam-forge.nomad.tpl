@@ -91,9 +91,9 @@ LDAP_ADMIN_PASSWORD={{ .Data.data.admin_password }}
 REDIS_HOSTS = {{ range service "PileELK-redis" }}{{ .Address }}:{{ .Port }}{{ end }}
 PILE_ELK_APPLICATION = LDAP 
 EOH
-                            destination = "local/file.env"
-                            change_mode = "restart"
-                            env = true
+                destination = "local/file.env"
+                change_mode = "restart"
+                env = true
             }
             config {
                 image = "ans/nomad-filebeat:8.2.3-2.0"

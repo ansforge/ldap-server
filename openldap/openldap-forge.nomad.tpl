@@ -1,6 +1,6 @@
 job "openldap-forge" {
     datacenters = ["${datacenter}"]
-	type = "service"
+    type = "service"
 
     vault {
         policies = ["forge"]
@@ -61,7 +61,7 @@ LDAP_CONFIG_ADMIN_PASSWORD={{ .Data.data.config_admin_password }}
             service {
                 name = "$\u007BNOMAD_JOB_NAME\u007D"
                 tags = ["urlprefix-:389 proto=tcp"]
-				port = "ldap"
+                port = "ldap"
                 check {
                     name     = "alive"
                     type     = "tcp"
@@ -76,10 +76,10 @@ LDAP_CONFIG_ADMIN_PASSWORD={{ .Data.data.config_admin_password }}
         task "log-shipper" {
             driver = "docker"
             restart {
-                    interval = "3m"
-                    attempts = 5
-                    delay    = "15s"
-                    mode     = "delay"
+                interval = "3m"
+                attempts = 5
+                delay    = "15s"
+                mode     = "delay"
             }
             meta {
                 INSTANCE = "$\u007BNOMAD_ALLOC_NAME\u007D"
@@ -88,10 +88,10 @@ LDAP_CONFIG_ADMIN_PASSWORD={{ .Data.data.config_admin_password }}
                 data = <<EOH
 REDIS_HOSTS = {{ range service "PileELK-redis" }}{{ .Address }}:{{ .Port }}{{ end }}
 PILE_ELK_APPLICATION = SONARQUBE 
-EOH
-                            destination = "local/file.env"
-                            change_mode = "restart"
-                            env = true
+    EOH
+                destination = "local/file.env"
+                change_mode = "restart"
+                env = true
             }
             config {
                 image = "ans/nomad-filebeat:8.2.3-2.0"
