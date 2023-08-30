@@ -87,7 +87,7 @@ LDAP_CONFIG_ADMIN_PASSWORD={{ .Data.data.config_admin_password }}
             template {
                 data = <<EOH
 REDIS_HOSTS = {{ range service "PileELK-redis" }}{{ .Address }}:{{ .Port }}{{ end }}
-PILE_ELK_APPLICATION = SONARQUBE 
+PILE_ELK_APPLICATION = LDAP 
     EOH
                 destination = "local/file.env"
                 change_mode = "restart"
