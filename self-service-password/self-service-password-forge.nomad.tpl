@@ -1,12 +1,12 @@
 job "self-service-password-forge" {
     datacenters = ["${datacenter}"]
-	type = "service"
+    type = "service"
 
     vault {
         policies = ["forge"]
         change_mode = "restart"
     }
-    group "self-service-password-server" {  
+    group "self-service-password-server" {
         count ="1"
         
         restart {
@@ -17,11 +17,14 @@ job "self-service-password-forge" {
         }
 
         network {
-            port "self-service-password" { to = 80 }            
+            port "self-service-password" { to = 80 }
         }
 
         task "self-service-password" {
             driver = "docker"
+
+            # log-shipper
+            leader = true 
 
             template {
                 destination = "secrets/config.inc.local.php"
@@ -50,7 +53,7 @@ $background_image = "";
 ?>
 EOH
             }
-			
+
             config {
                 image   = "${image}:${tag}"
                 ports   = ["self-service-password"]
@@ -60,11 +63,14 @@ EOH
                 cpu    = 300
                 memory = 512
             }
-            
+
             service {
                 name = "$\u007BNOMAD_JOB_NAME\u007D"
-                tags = [ "urlprefix-self-service-password.forge.asipsante.fr/" ]
-				port = "self-service-password"
+
+                tags = [ "urlprefix-${servername_self-service-password}/" ]
+                # tags = [ "urlprefix-self-service-password.forge.asipsante.fr/" ]
+                
+                port = "self-service-password"
                 check {
                     name     = "alive"
                     type     = "http"
@@ -74,6 +80,37 @@ EOH
                     port     = "self-service-password"
                 }
             }
-        } 
+        }
+
+
+        # log-shipper
+        task "log-shipper" {
+            driver = "docker"
+            restart {
+                interval = "3m"
+                attempts = 5
+                delay    = "15s"
+                mode     = "delay"
+            }
+            meta {
+                INSTANCE = "$\u007BNOMAD_ALLOC_NAME\u007D"
+            }
+            template {
+                data = <<EOH
+REDIS_HOSTS = {{ range service "PileELK-redis" }}{{ .Address }}:{{ .Port }}{{ end }}
+PILE_ELK_APPLICATION = LDAP 
+EOH
+                destination = "local/file.env"
+                change_mode = "restart"
+                env = true
+            }
+            config {
+                image = "ans/nomad-filebeat:8.2.3-2.0"
+            }
+            resources {
+                cpu    = 100
+                memory = 150
+            }
+        } #end log-shipper 
     }
 }

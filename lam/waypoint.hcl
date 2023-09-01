@@ -6,9 +6,9 @@ runner {
     enabled = true
     data_source "git" {
         url  = "https://github.com/ansforge/ldap-server.git"
-        ref  = "main"
-		path = "lam"
-		ignore_changes_outside_path = true
+        ref  = "var.datacenter"
+        path = "lam"
+        ignore_changes_outside_path = true
     }
 }
 
@@ -18,7 +18,7 @@ app "forge/lam" {
         use "docker-pull" {
             image = var.image
             tag   = var.tag
-	        disable_entrypoint = true
+            disable_entrypoint = true
         }
     }
   
@@ -45,5 +45,5 @@ variable "image" {
 
 variable "tag" {
     type    = string
-    default = "latest"
+    default = "8.3"
 }
