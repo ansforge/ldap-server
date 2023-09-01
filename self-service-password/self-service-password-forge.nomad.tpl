@@ -1,6 +1,6 @@
 job "self-service-password-forge" {
     datacenters = ["${datacenter}"]
-	type = "service"
+    type = "service"
 
     vault {
         policies = ["forge"]
@@ -63,10 +63,13 @@ EOH
                 cpu    = 300
                 memory = 512
             }
-            
+
             service {
                 name = "$\u007BNOMAD_JOB_NAME\u007D"
-                tags = [ "urlprefix-self-service-password.forge.asipsante.fr/" ]
+
+                tags = [ "urlprefix-${servername_self-service-password}/" ]
+                # tags = [ "urlprefix-self-service-password.forge.asipsante.fr/" ]
+                
                 port = "self-service-password"
                 check {
                     name     = "alive"
@@ -78,6 +81,7 @@ EOH
                 }
             }
         }
+
 
         # log-shipper
         task "log-shipper" {
@@ -108,6 +112,5 @@ EOH
                 memory = 150
             }
         } #end log-shipper 
-
     }
 }

@@ -6,25 +6,25 @@ job "openldap-forge" {
         policies = ["forge"]
         change_mode = "restart"
     }
-    group "openldap-server" {    
+    group "openldap-server" {
         count ="1"
-        
+
         restart {
             attempts = 3
             delay = "60s"
             interval = "1h"
             mode = "fail"
         }
-        
+
         constraint {
             attribute = "$\u007Bnode.class\u007D"
             value     = "data"
         }
 
         network {
-            port "ldap" { to = 1389 }            
+            port "ldap" { to = 1389 }
         }
-        
+
         task "openldap" {
             driver = "docker"
 
@@ -57,7 +57,7 @@ LDAP_CONFIG_ADMIN_PASSWORD={{ .Data.data.config_admin_password }}
                 cpu    = 300
                 memory = 512
             }
-            
+
             service {
                 name = "$\u007BNOMAD_JOB_NAME\u007D"
                 tags = ["urlprefix-:389 proto=tcp"]
