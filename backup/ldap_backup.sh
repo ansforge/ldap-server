@@ -13,6 +13,8 @@ echo "Démarrage du script de sauvegarde du LDAP de la Forge ANS"
 #-----------+--------+-------------+------------------------------------------------------
 #  0.0.1    | 15/12/22 | E.RIEGEL     | Initialisation du script
 #-----------+--------+-------------+------------------------------------------------------
+#  0.0.4    | 21/09/23 | Y.ETRILLARD      | Modification du nom du JOB
+#-----------+--------+-------------+------------------------------------------------------
 #
 ###############################################################################################
 
@@ -45,7 +47,7 @@ mkdir -p $BACKUP_DIR/$DATE
 # Backup LDAP
 echo "Starting backup ldap..."
 
-$NOMAD exec -job -task openldap ldap-forge tar -cOzv -C $LDAP_PATH openldap > $BACKUP_DIR/$DATE/$BACKUP_REPO_FILENAME
+$NOMAD exec -task openldap -job  openldap-forge tar -cOzv -C $LDAP_PATH openldap > $BACKUP_DIR/$DATE/$BACKUP_REPO_FILENAME
 BACKUP_RESULT=$?
 if [ $BACKUP_RESULT -gt 1 ]
 then
