@@ -24,7 +24,7 @@ echo "Démarrage du script de sauvegarde du LDAP de la Forge ANS"
 DATE=$(date +"%Y%m%d")
 
 # Dossier où sauvegarder les backups
-BACKUP_DIR="/var/BACKUP/LDAP"
+BACKUP_DIR="/var/backup/LDAP"
 
 # Commande NOMAD
 #NOMAD=/usr/local/bin/nomad
