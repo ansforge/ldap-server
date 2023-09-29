@@ -4,7 +4,7 @@ echo "Démarrage du script de sauvegarde du LDAP de la Forge ANS"
 # Nom du script     : ldap-backup.sh
 # Auteur            : E.RIEGEL (QM HENIX)
 # Date de Création  : 15/12/2022
-# Version           : 0.0.1
+# Version           : 0.0.2
 # Descritpion       : Script permettant la sauvegarde du LDAP de la Forge ANS
 #
 # Historique des mises à jour :
@@ -13,7 +13,7 @@ echo "Démarrage du script de sauvegarde du LDAP de la Forge ANS"
 #-----------+--------+-------------+------------------------------------------------------
 #  0.0.1    | 15/12/22 | E.RIEGEL     | Initialisation du script
 #-----------+--------+-------------+------------------------------------------------------
-#  0.0.4    | 21/09/23 | Y.ETRILLARD      | Modification du nom du JOB
+#  0.0.2    | 21/09/23 | Y.ETRILLARD      | Modification du nom du JOB
 #-----------+--------+-------------+------------------------------------------------------
 #
 ###############################################################################################
