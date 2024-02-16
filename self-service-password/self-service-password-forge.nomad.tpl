@@ -63,7 +63,7 @@ EOH
             
             service {
                 name = "$\u007BNOMAD_JOB_NAME\u007D"
-                tags = [ "urlprefix-self-service-password.forge.asipsante.fr/" ]
+                tags = [ "urlprefix-self-service-password.preprod.forge.asipsante.fr/" ]
 				port = "self-service-password"
                 check {
                     name     = "alive"
