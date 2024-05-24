@@ -6,9 +6,9 @@ runner {
     enabled = true
     data_source "git" {
         url  = "https://github.com/ansforge/ldap-server.git"
-        ref  = "main"
-		path = "openldap"
-		ignore_changes_outside_path = true
+        ref  = "var.datacenter"
+        path = "openldap"
+        ignore_changes_outside_path = true
     }
 }
 
@@ -18,7 +18,7 @@ app "forge/openldap" {
         use "docker-pull" {
             image = var.image
             tag   = var.tag
-	        disable_entrypoint = true
+            disable_entrypoint = true
         }
     }
   
