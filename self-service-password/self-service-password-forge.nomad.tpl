@@ -57,8 +57,8 @@ EOH
                 volumes = ["secrets/config.inc.local.php:/var/www/conf/config.inc.local.php"]
             }
             resources {
-                cpu    = 300
-                memory = 512
+                cpu    = 100
+                memory = 128
             }
             
             service {
