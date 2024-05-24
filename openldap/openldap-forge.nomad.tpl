@@ -1,32 +1,36 @@
 job "openldap-forge" {
     datacenters = ["${datacenter}"]
-	type = "service"
+    type = "service"
 
     vault {
         policies = ["forge"]
         change_mode = "restart"
     }
-    group "openldap-server" {    
+    group "openldap-server" {
         count ="1"
-        
+
         restart {
             attempts = 3
             delay = "60s"
             interval = "1h"
             mode = "fail"
         }
-        
+
         constraint {
             attribute = "$\u007Bnode.class\u007D"
             value     = "data"
         }
 
         network {
-            port "ldap" { to = 1389 }            
+            port "ldap" { to = 1389 }
         }
-        
+
         task "openldap" {
             driver = "docker"
+
+            # log-shipper
+            leader = true 
+
             template {
                 data = <<EOH
 {{ with secret "forge/openldap" }}
@@ -53,11 +57,11 @@ LDAP_CONFIG_ADMIN_PASSWORD={{ .Data.data.config_admin_password }}
                 cpu    = 200
                 memory = 256
             }
-            
+
             service {
                 name = "$\u007BNOMAD_JOB_NAME\u007D"
                 tags = ["urlprefix-:389 proto=tcp"]
-				port = "ldap"
+                port = "ldap"
                 check {
                     name     = "alive"
                     type     = "tcp"
@@ -66,6 +70,37 @@ LDAP_CONFIG_ADMIN_PASSWORD={{ .Data.data.config_admin_password }}
                     port     = "ldap"
                 }
             }
-        } 
+        }
+
+        # log-shipper
+        task "log-shipper" {
+            driver = "docker"
+            restart {
+                interval = "3m"
+                attempts = 5
+                delay    = "15s"
+                mode     = "delay"
+            }
+            meta {
+                INSTANCE = "$\u007BNOMAD_ALLOC_NAME\u007D"
+            }
+            template {
+                data = <<EOH
+REDIS_HOSTS = {{ range service "PileELK-redis" }}{{ .Address }}:{{ .Port }}{{ end }}
+PILE_ELK_APPLICATION = LDAP 
+    EOH
+                destination = "local/file.env"
+                change_mode = "restart"
+                env = true
+            }
+            config {
+                image = "ans/nomad-filebeat:8.2.3-2.0"
+            }
+            resources {
+                cpu    = 100
+                memory = 150
+            }
+        } #end log-shipper 
+
     }
 }
