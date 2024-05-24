@@ -54,8 +54,8 @@ LDAP_CONFIG_ADMIN_PASSWORD={{ .Data.data.config_admin_password }}
                 volume_driver = "pxd"
             }
             resources {
-                cpu    = 300
-                memory = 512
+                cpu    = 200
+                memory = 256
             }
 
             service {

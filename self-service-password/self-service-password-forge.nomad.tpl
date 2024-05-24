@@ -60,17 +60,17 @@ EOH
                 volumes = ["secrets/config.inc.local.php:/var/www/conf/config.inc.local.php"]
             }
             resources {
-                cpu    = 300
-                memory = 512
+                cpu    = 100
+                memory = 128
             }
 
             service {
                 name = "$\u007BNOMAD_JOB_NAME\u007D"
-
                 tags = [ "urlprefix-${servername_self-service-password}/" ]
-                # tags = [ "urlprefix-self-service-password.forge.asipsante.fr/" ]
+                # tags = [ "urlprefix-self-service-password.preprod.forge.asipsante.fr/" ]
                 
                 port = "self-service-password"
+                
                 check {
                     name     = "alive"
                     type     = "http"
