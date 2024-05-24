@@ -6,9 +6,9 @@ runner {
     enabled = true
     data_source "git" {
         url  = "https://github.com/ansforge/ldap-server.git"
-        ref  = "main"
-		path = "self-service-password"
-		ignore_changes_outside_path = true
+        ref  = "var.datacenter"
+        path = "self-service-password"
+        ignore_changes_outside_path = true
     }
 }
 
@@ -18,16 +18,17 @@ app "forge/self-service-password" {
         use "docker-pull" {
             image = var.image
             tag   = var.tag
-	        disable_entrypoint = true
+            disable_entrypoint = true
         }
     }
-  
+
     deploy{
         use "nomad-jobspec" {
             jobspec = templatefile("${path.app}/self-service-password-forge.nomad.tpl", {
             image   = var.image
             tag     = var.tag
             datacenter = var.datacenter
+            servername_self-service-password = var.servername_self-service-password
             })
         }
     }
@@ -45,5 +46,10 @@ variable "image" {
 
 variable "tag" {
     type    = string
-    default = "latest"
+    default = "1.5.3"
+}
+
+variable "servername_self-service-password" {
+    type    =string
+    default = "self-service-password.forge.asipsante.fr"
 }
