@@ -51,8 +51,8 @@ LDAP_ADMIN_PASSWORD={{ .Data.data.admin_password }}
                 ports   = ["lam"]
             }
             resources {
-                cpu    = 300
-                memory = 512
+                cpu    = 200
+                memory = 256
             }
             
             service {
