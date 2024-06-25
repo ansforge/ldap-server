@@ -54,8 +54,8 @@ LDAP_CONFIG_ADMIN_PASSWORD={{ .Data.data.config_admin_password }}
                 volume_driver = "pxd"
             }
             resources {
-                cpu    = 200
-                memory = 256
+                cpu    = 100
+                memory = 128
             }
 
             service {
@@ -97,8 +97,8 @@ PILE_ELK_APPLICATION = LDAP
                 image = "ans/nomad-filebeat:8.2.3-2.0"
             }
             resources {
-                cpu    = 100
-                memory = 150
+                cpu    = 50
+                memory = 100
             }
         } #end log-shipper 
 

@@ -60,8 +60,8 @@ EOH
                 volumes = ["secrets/config.inc.local.php:/var/www/conf/config.inc.local.php"]
             }
             resources {
-                cpu    = 100
-                memory = 128
+                cpu    = 50
+                memory = 64
             }
 
             service {
@@ -108,8 +108,8 @@ EOH
                 image = "ans/nomad-filebeat:8.2.3-2.0"
             }
             resources {
-                cpu    = 100
-                memory = 150
+                cpu    = 50
+                memory = 100
             }
         } #end log-shipper 
     }
