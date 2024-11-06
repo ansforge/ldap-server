@@ -17,6 +17,8 @@ echo "Démarrage du script de sauvegarde du LDAP de la Forge ANS"
 #-----------+--------+-------------+------------------------------------------------------
 #  1.0.0    | 28/08/24 | M. FAUREL   | Modification de la casse du path et timestamp
 #-----------+--------+-------------+------------------------------------------------------
+#  1.0.1    | 06/11/24 | M. FAUREL   | Modification du timestamp
+#-----------+--------+-------------+------------------------------------------------------
 #
 ###############################################################################################
 
@@ -24,7 +26,6 @@ echo "Démarrage du script de sauvegarde du LDAP de la Forge ANS"
 
 # Configuration de base: datestamp e.g. YYYYMMDD
 DATE=$(date +"%Y%m%d")
-TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
 
 # Dossier où sauvegarder les backups
 BACKUP_DIR="/var/backup/ldap"
@@ -48,19 +49,19 @@ RETENTION=10
 mkdir -p $BACKUP_DIR/$DATE
 
 # Backup LDAP
-echo "${TIMESTAMP} Starting backup ldap..."
+echo "$(date +"%Y-%m-%d %H:%M:%S") Starting backup ldap..."
 
 $NOMAD exec -task openldap -job  openldap-forge tar -cOzv -C $LDAP_PATH openldap > $BACKUP_DIR/$DATE/$BACKUP_REPO_FILENAME
 BACKUP_RESULT=$?
 if [ $BACKUP_RESULT -gt 1 ]
 then
-        echo "${TIMESTAMP} Backup LDAP failed with error code : ${BACKUP_RESULT}"
+        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup LDAP failed with error code : ${BACKUP_RESULT}"
         exit 1
 else
-        echo "${TIMESTAMP} Backup LDAP done"
+        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup LDAP done"
 fi
 
 # Remove files older than X days
 find $BACKUP_DIR/* -mtime +$RETENTION -exec rm -rf {} \;
 
-echo "${TIMESTAMP} Backup LDAP finished"
+echo "$(date +"%Y-%m-%d %H:%M:%S") Backup LDAP finished"
