@@ -49,19 +49,19 @@ RETENTION=10
 mkdir -p $BACKUP_DIR/$DATE
 
 # Backup LDAP
-echo "$(date +"%Y-%m-%d %H:%M:%S") Starting backup ldap..."
+echo "$(date +"%Y-%m-%d %H:%M:%S") Starting backup ldap..." >> $BACKUP_DIR/ldap_backup-cron-`date +\%F`.log
 
 $NOMAD exec -task openldap -job  openldap-forge tar -cOzv -C $LDAP_PATH openldap > $BACKUP_DIR/$DATE/$BACKUP_REPO_FILENAME
 BACKUP_RESULT=$?
 if [ $BACKUP_RESULT -gt 1 ]
 then
-        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup LDAP failed with error code : ${BACKUP_RESULT}"
+        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup LDAP failed with error code : ${BACKUP_RESULT}" >> $BACKUP_DIR/ldap_backup-cron-`date +\%F`.log
         exit 1
 else
-        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup LDAP done"
+        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup LDAP done" >> $BACKUP_DIR/ldap_backup-cron-`date +\%F`.log
 fi
 
 # Remove files older than X days
 find $BACKUP_DIR/* -mtime +$RETENTION -exec rm -rf {} \;
 
-echo "$(date +"%Y-%m-%d %H:%M:%S") Backup LDAP finished"
+echo "$(date +"%Y-%m-%d %H:%M:%S") Backup LDAP finished" >> $BACKUP_DIR/ldap_backup-cron-`date +\%F`.log
