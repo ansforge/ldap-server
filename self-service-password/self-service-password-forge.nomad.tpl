@@ -47,7 +47,7 @@ $pwd_max_length = 16;
 $pwd_min_lower = 1;
 $pwd_min_upper = 1;
 $pwd_min_digit = 1;
-$pwd_forbidden_chars = "?/{}][|`^~";
+$pwd_forbidden_chars = "?{}][|`^~";
 $keyphrase = "anssecret";
 $background_image = "";
 ?>
