@@ -7,6 +7,10 @@ job "lam-forge" {
         change_mode = "restart"
     }
     group "lam-server" {
+        constraint {
+          attribute = "${attr.unique.network.ip-address}"
+          value     = "10.0.71.193"
+        }
         count ="1"
 
         restart {
