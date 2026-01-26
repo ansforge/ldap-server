@@ -40,7 +40,7 @@ variable "datacenter" {
 
 variable "image" {
     type    = string
-    default = "bitnami-legacy/openldap"
+    default = "bitnamilegacy/openldap"
 }
 
 variable "tag" {
