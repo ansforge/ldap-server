@@ -55,7 +55,7 @@ EOH
             }
 
             config {
-                image   = "${image}:${tag}"
+                image   = "docker pull 614q518g.gra7.container-registry.ovh.net/dockerhub-proxy/${image}:${tag}"
                 ports   = ["self-service-password"]
                 volumes = ["secrets/config.inc.local.php:/var/www/conf/config.inc.local.php"]
             }
@@ -105,7 +105,7 @@ EOH
                 env = true
             }
             config {
-                image = "ans/nomad-filebeat:8.2.3-2.0"
+                image = "docker pull 614q518g.gra7.container-registry.ovh.net/ans/nomad-filebeat:8.2.3-2.0"
             }
             resources {
                 cpu    = 50
