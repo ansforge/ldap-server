@@ -51,7 +51,7 @@ LDAP_ADMIN_PASSWORD={{ .Data.data.admin_password }}
 
             config {
                 extra_hosts = ["ldap-ip:$\u007BNOMAD_IP_ldap\u007D"]
-                image   = "${image}:${tag}"
+                image   = "614q518g.gra7.container-registry.ovh.net/dockerhub-proxy/${image}:${tag}"
                 ports   = ["lam"]
             }
             resources {
@@ -96,7 +96,7 @@ EOH
                 env = true
             }
             config {
-                image = "ans/nomad-filebeat:8.2.3-2.0"
+                image = "614q518g.gra7.container-registry.ovh.net/ans/nomad-filebeat:8.2.3-2.0"
             }
             resources {
                 cpu    = 50
