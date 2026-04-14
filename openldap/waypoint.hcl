@@ -40,7 +40,7 @@ variable "datacenter" {
 
 variable "image" {
     type    = string
-    default = "bitnamilegacy/openldap"
+    default = "614q518g.gra7.container-registry.ovh.net/dockerhub-proxy/bitnamilegacy/openldap"
 }
 
 variable "tag" {
