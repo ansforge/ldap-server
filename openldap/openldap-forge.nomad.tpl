@@ -50,7 +50,7 @@ LDAP_CONFIG_ADMIN_PASSWORD={{ .Data.data.config_admin_password }}
             config {
                 image   = "${image}:${tag}"
                 ports   = ["ldap"]
-                volumes = ["name=forge-openldap,io_priority=high,size=2,repl=2:/bitnami/openldap"]
+                volumes = ["name=forge-openldap,io_priority=low,size=2,repl=2:/bitnami/openldap"]
                 volume_driver = "pxd"
             }
             resources {
