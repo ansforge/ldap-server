@@ -41,7 +41,7 @@ variable "datacenter" {
 
 variable "image" {
     type    = string
-    default = "ltbproject/self-service-password"
+    default = "614q518g.gra7.container-registry.ovh.net/dockerhub-proxy/ltbproject/self-service-password"
 }
 
 variable "tag" {
